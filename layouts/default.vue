@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <Header />
 
         <main class="section-main">
             <nuxt />

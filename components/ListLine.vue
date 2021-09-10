@@ -9,22 +9,27 @@
             />
           </div>
           <div class="item-preview">
-            <div class="item_preview__title active">
-              Первые земельные участки реализованы на специальных торгах для
-              малого и среднего бизнеса
-            </div>
-            <div class="item_preview__descr">
-              На каждый участок претендовали в среднем шесть участников.
-              Стоимость одной из сделок выросла в ходе аукциона в 26 раз.
-            </div>
+            <a :href='post.link' class="item_preview__title active">{{post.title}}</a>
+            <div class="item_preview__descr">{{post.description}}</div>
           </div>
         </div>
         <div class="item-info">
-          <div class="item_resource">www.mos.ru</div>
-          <div class="item_date">12.01.2020</div>
+          <div class="item_resource" v-if='this.post.link.includes("mos.ru")'>www.mos.ru</div>
+          <div class="item_resource" v-else>lenta.ru</div>
+          <div class="item_date">{{post.pubDate}}</div>
         </div>
     </div>
 </template>
+
+
+<script>
+export default {
+  props: {
+    post: {},
+  },
+}
+</script>
+
 
 <style lang='scss' scoped>
 .list-line__item {
