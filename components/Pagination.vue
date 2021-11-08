@@ -1,17 +1,30 @@
 <template>
   <div class="section-main-pagination">
-    <span class="pagination__item" 
+    <div class="items" v-if='pages > 4'>
+      <nuxt-link class="pagination__item" active-class='active' aria-current="page" :to='{...$route, params:{id: page}}' no-prefetch exact
 
-      :class="{'active': page === pageNumber}"
       v-for='page in pagesCount' 
       :key='page'
-      @click='$emit("pageChange", page); pagesCountStart(page)'
+      :class="{'active': page === pageNumber}"
 
-    >{{page}}
-    </span>
-    <span class="pagination__item">...</span>
-    <span class="pagination__item last" :class="{'active': pages === pageNumber}" @click='$emit("pageChange", pages); pagesCountEnd(pages)'>{{pages}}</span>
-    
+      >{{page}}
+      </nuxt-link>
+      <span class="pagination__item" v-if="pageNumber !== pages">...</span>
+      <nuxt-link class="pagination__item" active-class='active' aria-current="page" :to='{...$route, params:{id: pages}}' no-prefetch exact
+      :class="{'active': pages === pageNumber}" 
+      >{{pages}}</nuxt-link>
+    </div>
+
+    <div class="items" v-else>
+      <nuxt-link class="pagination__item" active-class='active' aria-current="page" :to='{...$route, params:{id: page}}' no-prefetch exact
+  
+      v-for='page in pages' 
+      :key='page'
+      :class="{'active': page === pageNumber}"
+
+      >{{page}}
+      </nuxt-link >
+    </div>
   </div>
 </template>
 
@@ -32,14 +45,17 @@ export default {
   },
   methods:{
     pagesCountStart(page){
-      if(1 < page && page < this.pages-3){
+      if(1 < page && page < this.pages-1){
         this.pagesCount=[page-1,page,page+1,page+2]
+      } else if(1 < page && page === this.pages-1){
+        this.pagesCount=[page-2,page-1,page]
       }
     },
-    pagesCountEnd(page){
-      this.pagesCount=[page-4,page-3,page-2,page-1]
-    }
+  },
+  mounted(){
+    this.pagesCountStart(this.pageNumber)
   }
+  
 }
 </script>
 
@@ -54,6 +70,7 @@ export default {
         font-weight: 700;
         margin-right: 15px;
         cursor: pointer;
+        color: #111;
     }
 }
 </style>

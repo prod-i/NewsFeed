@@ -1,8 +1,18 @@
 <template>
-    <div class="section-header__update-list">
+    <div class="section-header__update-list" @click="refresh">
         <img src="@/assets/Img/icon/updateNewsList.png" alt="" class="update-list_img">
     </div>
 </template>
+
+<script>
+export default {
+    methods:{
+        refresh(){
+            this.$emit('refresh')
+        }
+    },
+}
+</script>
 
 <style lang='scss' scoped>
 .section-header__update-list{

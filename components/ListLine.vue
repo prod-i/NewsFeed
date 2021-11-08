@@ -3,7 +3,7 @@
         <div class="item-wrapper">
           <div class="item-image">
             <img
-              src="@/assets/img/preview-1.png"
+              :src='post.enclosure'
               alt=""
               class="item-image_img"
             />
@@ -26,6 +26,9 @@
 export default {
   props: {
     post: {},
+  },
+  mounted(){
+    // console.log(typeof('123') === 'string');
   },
 }
 </script>

@@ -1,14 +1,27 @@
 <template>
     <div class="section-main-options">
         <div class="options-resources">
-                <span class="options-resources__item active">Все</span>
-                <span class="options-resources__item">Lenta.ru</span>
-                <span class="options-resources__item">Mos.ru</span>
+
+                <span class="options-resources__item" 
+                    :class="{ active: selectedSort === ''}" 
+                    @click='selectedSortUpdate("")'
+                >Все</span>
+
+                <span class="options-resources__item"
+                    :class="{ active: selectedSort === 'lenta.ru' }" 
+                    @click='selectedSortUpdate("lenta.ru")'
+                >Lenta.ru</span>
+
+                <span class="options-resources__item"
+                    :class="{ active: selectedSort === 'mos.ru' }" 
+                    @click='selectedSortUpdate("mos.ru")'
+                >Mos.ru</span>
+
         </div>
         <div class="options-selector-display">
             <div class="display__line" 
-                :class="{ active: display }" 
-                @click='$emit("onLineMod")'
+                :class="{ active: listDisplayType === 'line' }" 
+                @click='listDisplayTypeUpdate("line")'
             >
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="18" height="8" fill="#C4C4C4"/>
@@ -16,8 +29,8 @@
                 </svg>
             </div>
             <div class="display__block" 
-                :class="{ active: !display }" 
-                @click='$emit("onBlockMod")'
+                :class="{ active: listDisplayType === 'block' }" 
+                @click='listDisplayTypeUpdate("block")'
             >
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="8" height="8" fill="#C4C4C4"/>
@@ -32,15 +45,19 @@
 
 <script>
 export default {
-    props: {
-        modelValue: [String, Number],
-        display: [Boolean],
+    props:{
+        selectedSort: {type: String},
+        listDisplayType: {type: String},
     },
-    methods: {
-        refresh(e){
-            this.$emit('refresh', e.target.value)
-        }
-    }
+    methods:{
+        selectedSortUpdate(value){
+            this.$router.push({...this.$route, query:{...this.$route.query, sort: value}})
+            this.$emit('selectedSortUpdate', value)
+        },
+        listDisplayTypeUpdate(type){
+            this.$emit('listDisplayTypeUpdate', type)
+        },
+    },
 }
 </script>
 

@@ -1,13 +1,31 @@
 <template>
     <div class="section-header-right">
         <form name="search" class="section-header__search-form">
-            <img src="@/assets/Img/icon/search.png" alt="" class="search-form_img">
-            <input type="text" class="search-form_input" />
+            <img src="@/assets/Img/icon/search.png" alt="" class="search-form_img" @click="searchPosts">
+            <input type="text" class="search-form_input" 
+                :value='searchQuery'
+                @input="updateInput"
+            />
         </form>
     </div>
 </template>
 
+<script>
+export default {
+    props: {
+        searchQuery: [String, Number],
+    },    
+    methods: {
+        updateInput(e){
+            this.$emit('searchQueryUpdate', e.target.value)
+        },
+        searchPosts(){
+            this.$emit('searchPosts')
+        }
+    },
+}
 
+</script>
 <style lang='scss' scoped>
 .section-header-right{
     display: flex;

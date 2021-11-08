@@ -6,15 +6,37 @@
                     <h1>Список новостей</h1>
                 </div>
 
-                <MyRefresh />
+                <MyRefresh @refresh="refresh"/>
 
             </div>
 
-            <MyInput />
+            <MyInput 
+                :searchQuery='searchQuery'
+                @searchQueryUpdate='searchQueryUpdate' 
+                @searchPosts='searchPosts'
+            />
 
         </header>
 </template>
 
+<script>
+export default {
+    props:{
+        searchQuery: {type: String}
+    },
+    methods:{
+        searchQueryUpdate(value){
+            this.$emit('searchQueryUpdate', value)
+        },
+        searchPosts(){
+            this.$emit('searchPosts')
+        },
+        refresh(){
+            this.$emit('refresh')
+        }
+    },
+}
+</script>
 
 
 

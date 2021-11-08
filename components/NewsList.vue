@@ -1,18 +1,17 @@
 <template>
   <div class="section-main-list">
 
-    <div class="section-main-list-line" v-if='display'>
+    <div class="section-main-list-line" v-if='listDisplayType === "line"'>
         <ListLine v-for='post in paginatedUsers' :key='post.link' :post='post'/>
     </div>
 
-    <div class="section-main-list-block" v-else>
+    <div class="section-main-list-block" v-else-if='listDisplayType === "block"'>
         <ListBlock v-for='post in paginatedUsers' :key='post.link' :post='post'/>
     </div>
 
     <Pagination 
       :pages='pages' 
       :pageNumber='pageNumber'
-      @pageChange='pageChange'
     />
 
   </div>
@@ -26,45 +25,37 @@ export default {
   props: {
     posts: {
       type: Array,
-      default: () => {
-        return []
-      }
+      required: true,
     },
-    display: [Boolean],
-  },
-
-  data(){
-    return {
-      pageNumber: 1,
-      postsList: this.posts,
-    }
-  },
-  methods:{
-    pageChange(pageNumber){
-      this.pageNumber = pageNumber
+    pageNumber: {
+      type: Number,
+      default: 1,
     },
   },
+  
   computed:{
     pages(){
       if(this.display === true){
-        return Math.ceil(this.postsList.length / 3);
+        return Math.ceil(this.posts.length / 3);
       } else {
-        return Math.ceil(this.postsList.length / 4);
+        return Math.ceil(this.posts.length / 4);
       }
     },
     paginatedUsers(){
-      if(this.display === true){
+      if(this.listDisplayType === "line"){
         const from = (this.pageNumber - 1) * 3;
         const to = from + 3;
-        return this.postsList.slice(from, to);
+        return this.posts.slice(from, to);
       } else {
         const from = (this.pageNumber - 1) * 4;
         const to = from + 4;
-        return this.postsList.slice(from, to);
+        return this.posts.slice(from, to);
       }
     },
+    listDisplayType(){
+      return this.$store.getters['listDisplayType'];
+    },
   },
-
 }
 </script>
 
