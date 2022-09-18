@@ -51,7 +51,7 @@ export default {
     },
     methods:{
         selectedSortUpdate(value){
-            this.$router.push({...this.$route, query:{...this.$route.query, sort: value}})
+            // this.$router.push({...this.$route, query:{...this.$route.query, sort: value && value}})
             this.$emit('selectedSortUpdate', value)
         },
         listDisplayTypeUpdate(type){

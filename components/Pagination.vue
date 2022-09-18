@@ -1,6 +1,7 @@
 <template>
   <div class="section-main-pagination">
     <div class="items" v-if='pages > 4'>
+      
       <nuxt-link class="pagination__item" active-class='active' aria-current="page" :to='{...$route, params:{id: page}}' no-prefetch exact
 
       v-for='page in pagesCount' 
@@ -9,10 +10,13 @@
 
       >{{page}}
       </nuxt-link>
+
       <span class="pagination__item" v-if="pageNumber !== pages">...</span>
+
       <nuxt-link class="pagination__item" active-class='active' aria-current="page" :to='{...$route, params:{id: pages}}' no-prefetch exact
       :class="{'active': pages === pageNumber}" 
       >{{pages}}</nuxt-link>
+
     </div>
 
     <div class="items" v-else>

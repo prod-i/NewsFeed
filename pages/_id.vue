@@ -25,6 +25,7 @@ export default {
   },
   computed: {
     getSortedPosts(){
+      console.log(this.$store.getters['sortedPosts'])
       return this.$store.getters['sortedPosts'];
     }
   },  

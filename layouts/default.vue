@@ -25,6 +25,7 @@
 </template>
 
 <script>
+
 import SearchSortedPosts from '@/plugins/SearchSortedPosts.js'
 export default {
     data(){
@@ -50,8 +51,11 @@ export default {
             this.$router.push({...this.$route, params:{id: 1}, query:{...this.$route.query, search: this.search}})
         },
         selectedSortUpdate(value){
+            console.log('kek');
+            console.log(arguments);
             this.selectedSort = value;
             this.sortPosts()
+            this.$router.push({...this.$route, query:{...this.$route.query, sort: value && value}})
         },
         listDisplayTypeUpdate(type){
             localStorage.listDisplayType = type;
